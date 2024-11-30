@@ -23,10 +23,25 @@ For psycop2 (python driver for PostgreSQL), may need to first install :
 sudo apt install libpq-dev python3-dev
 ```
 
+and 
+
+```
+pip install psycopg2-binary
+```
+
+
 # Differences to the tutorial
 
-To create all tables (which is the post table), run this command in shell
+1. To create all tables (which is the post table), run this command in shell
 
 ```
 python create_db_tables.py
 ```
+
+2. To populate the database with sample data, run
+
+```
+python add_sample_data.py
+````
+
+The sample data is read from file data/posts.csv.
