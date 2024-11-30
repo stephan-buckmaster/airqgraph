@@ -9,6 +9,10 @@ Here we use .env for managing database credentials (which is git-ignored). Creat
 DATABASE_URI='postgresql://sample_user:samplepwd@localhost:5432/sample_db'
 ```
 
+# Python version
+
+Verified with Python version 3.13.0
+
 # Additional Installation Steps
 
 This repo has a requirements.txt. As usual, install packages with
