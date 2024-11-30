@@ -8,3 +8,25 @@ Here we use .env for managing database credentials (which is git-ignored). Creat
 ```
 DATABASE_URI='postgresql://sample_user:samplepwd@localhost:5432/sample_db'
 ```
+
+# Additional Installation Steps
+
+This repo has a requirements.txt. As usual, install packages with
+
+```
+pip install -r requirements.txt
+```
+
+For psycop2 (python driver for PostgreSQL), may need to first install :
+
+```
+sudo apt install libpq-dev python3-dev
+```
+
+# Differences to the tutorial
+
+To create all tables (which is the post table), run this command in shell
+
+```
+python create_db_tables.py
+```
