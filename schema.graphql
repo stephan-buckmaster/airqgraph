@@ -3,24 +3,47 @@ schema {
     mutation: Mutation
 }
 
-type AirVisualConcentration {
+type AirvisualConcentration {
     conc: Float
     aqius: Float
     aqicn: Float
 }
 
+input AirvisualConcentrationInput {
+    conc: Float
+    aqius: Float
+    aqicn: Float
+}
 type AirvisualDeviceMeasurement {
     id: ID!
     co2: Float
-    pm25: AirVisualConcentration!
-    pm10:  AirVisualConcentration!
-    pm1:  AirVisualConcentration!
+    pm25: AirvisualConcentration!
+    pm10:  AirvisualConcentration!
+    pm1:  AirvisualConcentration!
     pr: Float
     hm: Float
     tp: Float
     aqius: Float
     aqicn: Float
+    mainus: String
+    maincn: String
+    ts: String
     created_at: String!
+}
+
+input AirvisualDeviceMeasurementInput {
+    pm25: AirvisualConcentrationInput
+    pm10:  AirvisualConcentrationInput
+    pm1:  AirvisualConcentrationInput
+    co2: Float
+    pr: Float
+    hm: Float
+    tp: Float
+    aqius: Float
+    aqicn: Float
+    mainus: String
+    maincn: String
+    ts: String
 }
 
 type AirvisualDeviceMeasurementResult {
@@ -41,22 +64,7 @@ type Query {
 }
 
 type Mutation {
-    createAirvisualDeviceMeasurement(co2: Float, 
-      pm25_conc: Float, 
-      pm25_aqius: Float, 
-      pm25_aqicn: Float, 
-      pm10_conc: Float, 
-      pm10_aqius: Float, 
-      pm10_aqicn: Float, 
-      pm1_conc: Float, 
-      pm1_aqius: Float, 
-      pm1_aqicn: Float, 
-      pr: Float, 
-      hm: Float, 
-      tp: Float, 
-      aqius: Float, 
-      aqicn: Float, 
-      created_at: String): AirvisualDeviceMeasurementResult!
+    createAirvisualDeviceMeasurement(input: AirvisualDeviceMeasurementInput): AirvisualDeviceMeasurementResult!
     updateAirvisualDeviceMeasurement(id: ID!, title: String, description: String): AirvisualDeviceMeasurementResult!
     deleteAirvisualDeviceMeasurement(id: ID): AirvisualDeviceMeasurementResult!
 }

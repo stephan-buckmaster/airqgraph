@@ -12,4 +12,4 @@ db = SQLAlchemy(app)
 
 @app.route('/')
 def hello():
-    return 'My First API !!'
+    return 'API for reading/submitting air quality monitoring data !!'

@@ -1,7 +1,7 @@
 from app import db
 
 class AirvisualDeviceMeasurement(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     co2 = db.Column(db.Float)
     pm25_conc = db.Column(db.Float)
     pm25_aqius = db.Column(db.Float)
@@ -17,17 +17,18 @@ class AirvisualDeviceMeasurement(db.Model):
     tp = db.Column(db.Float)
     aqius = db.Column(db.Float)
     aqicn = db.Column(db.Float)
+    mainus = db.Column(db.String)
+    maincn = db.Column(db.String)
+    ts = db.Column(db.String)
     created_at = db.Column(db.DateTime, nullable=False)
 
     def to_dict(self):
         return {
             "id": self.id,
-            "co2": self.co2,
-            "pmtwofive": {
-                "conc": self.pm25_conc,
-                "aqius": self.pm25_aqius,
-                "aqicn": self.pm25_aqicn
-            },
+            "co_2": self.co2,
+            "mainus": self.mainus,
+            "maincn": self.maincn,
+            "ts": self.ts,
             "pm_25": {
                 "conc": self.pm25_conc,
                 "aqius": self.pm25_aqius,
@@ -50,5 +51,3 @@ class AirvisualDeviceMeasurement(db.Model):
             "aqicn": self.aqicn,
             "created_at": self.created_at.isoformat()
         }
-
- #{"ts"=>"2024-12-01T01:00:00.000Z", "aqius"=>28, "aqicn"=>7, "pm25"=>{"aqius"=>28, "aqicn"=>7, "concentration"=>5.1}, "mainus"=>"pm25", "maincn"=>"pm25", "condition"=>"Rain", "icon"=>"10n", "humidity"=>86, "pressure"=>1025, "temperature"=>5, "wind"=>{"speed"=>1.34, "direction"=>62}} 
