@@ -3,32 +3,60 @@ schema {
     mutation: Mutation
 }
 
-type Post {
+type AirvisualDeviceMeasurement {
     id: ID!
-    title: String!
-    description: String!
+    co2: Float
+    pm25_conc: Float
+    pm25_aqius: Float
+    pm25_aqicn: Float
+    pm10_conc: Float
+    pm10_aqius: Float
+    pm10_aqicn: Float
+    pm1_conc: Float
+    pm1_aqius: Float
+    pm1_aqicn: Float
+    pr: Float
+    hm: Float
+    tp: Float
+    aqius: Float
+    aqicn: Float
     created_at: String!
 }
 
-type PostResult {
+type AirvisualDeviceMeasurementResult {
     success: Boolean!
     errors: [String]
-    post: Post
+    airvisual_device_measurement: AirvisualDeviceMeasurement
 }
 
-type PostsResult {
+type AirvisualDeviceMeasurementsResult {
     success: Boolean!
     errors: [String]
-    posts: [Post]
+    airvisual_device_measurements: [AirvisualDeviceMeasurement]
 }
 
 type Query {
-    listPosts: PostsResult!
-    getPost(id: ID!): PostResult!
+    listAirvisualDeviceMeasurements: AirvisualDeviceMeasurementsResult!
+    getAirvisualDeviceMeasurement(id: ID!): AirvisualDeviceMeasurementResult!
 }
 
 type Mutation {
-    createPost(title: String!, description: String!, created_at: String): PostResult!
-    updatePost(id: ID!, title: String, description: String): PostResult!
-    deletePost(id: ID): PostResult!
+    createAirvisualDeviceMeasurement(co2: Float, 
+      pm25_conc: Float, 
+      pm25_aqius: Float, 
+      pm25_aqicn: Float, 
+      pm10_conc: Float, 
+      pm10_aqius: Float, 
+      pm10_aqicn: Float, 
+      pm1_conc: Float, 
+      pm1_aqius: Float, 
+      pm1_aqicn: Float, 
+      pr: Float, 
+      hm: Float, 
+      tp: Float, 
+      aqius: Float, 
+      aqicn: Float, 
+      created_at: String): AirvisualDeviceMeasurementResult!
+    updateAirvisualDeviceMeasurement(id: ID!, title: String, description: String): AirvisualDeviceMeasurementResult!
+    deleteAirvisualDeviceMeasurement(id: ID): AirvisualDeviceMeasurementResult!
 }

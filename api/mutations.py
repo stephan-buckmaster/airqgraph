@@ -3,14 +3,14 @@ from datetime import date
 from ariadne import convert_kwargs_to_snake_case
 
 from api import db
-from api.models import Post
+from api.models import AirvisualDeviceMeasurement
 
 
 @convert_kwargs_to_snake_case
 def create_post_resolver(obj, info, title, description):
     try:
         today = date.today()
-        post = Post(
+        post = AirvisualDeviceMeasurement(
             title=title, description=description, created_at=today.strftime("%b-%d-%Y")
         )
         db.session.add(post)
@@ -31,7 +31,7 @@ def create_post_resolver(obj, info, title, description):
 @convert_kwargs_to_snake_case
 def update_post_resolver(obj, info, id, title, description):
     try:
-        post = Post.query.get(id)
+        post = AirvisualDeviceMeasurement.query.get(id)
         if post:
             post.title = title
             post.description = description
@@ -53,7 +53,7 @@ def update_post_resolver(obj, info, id, title, description):
 @convert_kwargs_to_snake_case
 def delete_post_resolver(obj, info, id):
     try:
-        post = Post.query.get(id)
+        post = AirvisualDeviceMeasurement.query.get(id)
         db.session.delete(post)
         db.session.commit()
         payload = {"success": True, "post": post.to_dict()}

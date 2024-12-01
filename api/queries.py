@@ -1,14 +1,12 @@
-from .models import Post
+from .models import AirvisualDeviceMeasurement
 from ariadne import convert_kwargs_to_snake_case
 
-
-def listPosts_resolver(obj, info):
+def listAirvisualDeviceMeasurements_resolver(obj, info):
     try:
-        posts = [post.to_dict() for post in Post.query.all()]
-        print(posts)
+        airvisual_device_measurements = [airvisual_device_measurement.to_dict() for airvisual_device_measurement in AirvisualDeviceMeasurement.query.all()]
         payload = {
             "success": True,
-            "posts": posts
+            "airvisual_device_measurements": airvisual_device_measurements
         }
     except Exception as error:
         payload = {
@@ -18,12 +16,12 @@ def listPosts_resolver(obj, info):
     return payload
 
 @convert_kwargs_to_snake_case
-def getPost_resolver(obj, info, id):
+def getAirvisualDeviceMeasurement_resolver(obj, info, id):
     try:
-        post = Post.query.get(id)
+        airvisual_device_measurement = AirvisualDeviceMeasurement.query.get(id)
         payload = {
             "success": True,
-            "post": post.to_dict()
+            "airvisual_device_measurement": airvisual_device_measurement.to_dict()
         }
 
     except AttributeError:  # todo not found

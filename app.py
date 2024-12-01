@@ -3,7 +3,7 @@ from api import app, db
 from ariadne import load_schema_from_path, make_executable_schema, \
     graphql_sync, snake_case_fallback_resolvers, ObjectType
 from flask import request, jsonify
-from api.queries import listPosts_resolver, getPost_resolver
+from api.queries import listAirvisualDeviceMeasurements_resolver, getAirvisualDeviceMeasurement_resolver
 from api.mutations import create_post_resolver, update_post_resolver, delete_post_resolver
 from ariadne.explorer import ExplorerPlayground
 
@@ -12,12 +12,12 @@ PLAYGROUND_HTML = ExplorerPlayground(title="Demo Python GraphQL API").html(None)
 query = ObjectType("Query")
 mutation = ObjectType("Mutation")
 
-query.set_field("listPosts", listPosts_resolver)
-query.set_field("getPost", getPost_resolver)
+query.set_field("listAirvisualDeviceMeasurements", listAirvisualDeviceMeasurements_resolver)
+query.set_field("getAirvisualDeviceMeasurement", getAirvisualDeviceMeasurement_resolver)
 
-mutation.set_field("createPost", create_post_resolver)
-mutation.set_field("updatePost", update_post_resolver)
-mutation.set_field("deletePost", delete_post_resolver)
+mutation.set_field("createAirvisualDeviceMeasurement", create_post_resolver)
+mutation.set_field("updateAirvisualDeviceMeasurement", update_post_resolver)
+mutation.set_field("deleteAirvisualDeviceMeasurement", delete_post_resolver)
 
 type_defs = load_schema_from_path("schema.graphql")
 schema = make_executable_schema(
