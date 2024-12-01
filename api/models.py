@@ -1,7 +1,5 @@
 from app import db
 
-#=> {"co2"=>437, "pm25"=>{"conc"=>3, "aqius"=>17, "aqicn"=>4}, "pm10"=>{"conc"=>5, "aqius"=>5, "aqicn"=>5}, "pm1"=>{"conc"=>2, "aqius"=>11, "aqicn"=>3}, "pr"=>102226, "hm"=>87, "tp"=>6.2, "ts"=>"2024-12-01T01:54:11.000Z", "mainus"=>"pm25", "maincn"=>"pm10", "aqius"=>17, "aqicn"=>5} 
-
 class AirvisualDeviceMeasurement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     co2 = db.Column(db.Float)
@@ -25,15 +23,26 @@ class AirvisualDeviceMeasurement(db.Model):
         return {
             "id": self.id,
             "co2": self.co2,
-            "pm25_conc": 123.34, # self.pm25_conc,
-            "pm25_aqius": self.pm25_aqius,
-            "pm25_aqicn": self.pm25_aqicn,
-            "pm10_conc": self.pm10_conc,
-            "pm10_aqius": self.pm10_aqius,
-            "pm10_aqicn": self.pm10_aqicn,
-            "pm1_conc": self.pm1_conc,
-            "pm1_aqius": self.pm1_aqius,
-            "pm1_aqicn": self.pm1_aqicn,
+            "pmtwofive": {
+                "conc": self.pm25_conc,
+                "aqius": self.pm25_aqius,
+                "aqicn": self.pm25_aqicn
+            },
+            "pm_25": {
+                "conc": self.pm25_conc,
+                "aqius": self.pm25_aqius,
+                "aqicn": self.pm25_aqicn
+            },
+            "pm_10" :{
+                "conc": self.pm10_conc,
+                "aqius": self.pm10_aqius,
+                "aqicn": self.pm10_aqicn,
+            },
+            "pm_1": {
+                "conc": self.pm1_conc,
+                "aqius": self.pm1_aqius,
+                "aqicn": self.pm1_aqicn,
+            },
             "pr": self.pr,
             "hm": self.hm,
             "tp": self.tp,

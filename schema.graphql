@@ -3,18 +3,18 @@ schema {
     mutation: Mutation
 }
 
+type AirVisualConcentration {
+    conc: Float
+    aqius: Float
+    aqicn: Float
+}
+
 type AirvisualDeviceMeasurement {
     id: ID!
     co2: Float
-    pm25_conc: Float
-    pm25_aqius: Float
-    pm25_aqicn: Float
-    pm10_conc: Float
-    pm10_aqius: Float
-    pm10_aqicn: Float
-    pm1_conc: Float
-    pm1_aqius: Float
-    pm1_aqicn: Float
+    pm25: AirVisualConcentration!
+    pm10:  AirVisualConcentration!
+    pm1:  AirVisualConcentration!
     pr: Float
     hm: Float
     tp: Float
