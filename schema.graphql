@@ -60,11 +60,10 @@ type AirvisualDeviceMeasurementsResult {
 
 type Query {
     listAirvisualDeviceMeasurements: AirvisualDeviceMeasurementsResult!
+    getLatestAirvisualDeviceMeasurement: AirvisualDeviceMeasurementResult!
     getAirvisualDeviceMeasurement(id: ID!): AirvisualDeviceMeasurementResult!
 }
 
 type Mutation {
     createAirvisualDeviceMeasurement(input: AirvisualDeviceMeasurementInput): AirvisualDeviceMeasurementResult!
-    updateAirvisualDeviceMeasurement(id: ID!, title: String, description: String): AirvisualDeviceMeasurementResult!
-    deleteAirvisualDeviceMeasurement(id: ID): AirvisualDeviceMeasurementResult!
 }

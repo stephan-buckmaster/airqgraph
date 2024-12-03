@@ -1,5 +1,6 @@
 from .models import AirvisualDeviceMeasurement
 from ariadne import convert_kwargs_to_snake_case
+from sqlalchemy import text
 
 def listAirvisualDeviceMeasurements_resolver(obj, info):
     try:
@@ -15,6 +16,23 @@ def listAirvisualDeviceMeasurements_resolver(obj, info):
         }
     return payload
 
+@convert_kwargs_to_snake_case
+def getLatestAirvisualDeviceMeasurement_resolver(obj, info):
+    try:
+        print(str(info))
+        airvisual_device_measurement = AirvisualDeviceMeasurement.query.order_by(text('id desc')).limit(1).first()
+        payload = {
+            "success": True,
+            "airvisual_device_measurement": airvisual_device_measurement.to_dict()
+        }
+
+    except Exception as err :
+        payload = {
+            "success": False,
+            "errors": [f"Error: {err}"]
+        }
+
+    return payload
 @convert_kwargs_to_snake_case
 def getAirvisualDeviceMeasurement_resolver(obj, info, id):
     try:
