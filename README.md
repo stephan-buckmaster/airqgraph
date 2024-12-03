@@ -1,51 +1,133 @@
-Known for its ease of use and simplicity, Python is one of the most beloved general-purpose programming languages. And GraphQL, a declarative query language for APIs and server runtimes, pairs quite nicely with Python. Unfortunately, there are very few comprehensive learning materials out there that give you a step-by-step breakdown of how to use GraphQL with Python.
+# Air Quality Monitoring Server
 
-This repo has the code of [this article](https://www.apollographql.com/blog/complete-api-guide) which goes over everything you need to know to get up and running with GraphQL API using Python, Flask, and Ariadne.
+This project comprises a GraphQL server that creates records in a PostgreSQL database and allows retrieving the latest air quality data from the measurements recorded by an [IQAir](https://www.iqair.com) device
 
-Here we use .env for managing database credentials (which is git-ignored). Create an entry in file called .env
- in the root directory as below. Of course, change localhost and port as needed.
+This is the origin of the data behind this API. So this API allows submitting data obtained from their API, and then retrieving it for further processing, e.g. display.
 
-```
-DATABASE_URI='postgresql://sample_user:samplepwd@localhost:5432/sample_db'
-```
+The device id used in the API requests would only be known to the owner. So this API allows such owners to publish the data recorded by their device.
 
-# Python version
+# Sample Request to the manufacturer's API
 
-Verified with Python version 3.13.0
+The manufacturer provides access to the measurements through a JSON API by device id. The device id used would only be known to the owner. They can find this device id by logging into their account and navigating to their device page. On the right will be a list of API links.
 
-# Additional Installation Steps
+![Screenshot of IQAir Device Page](images/iqair-device-page.png?raw=true "Screenshot of IQAir Device Page")
 
-This repo has a requirements.txt. As usual, install packages with
+
+For example this curl command can be used to obtain the JSON of the measurements:
 
 ```
-pip install -r requirements.txt
+curl https://device.iqair.com/v2/1234567890abcdef12345678
 ```
 
-For psycop2 (python driver for PostgreSQL), may need to first install :
+The response is JSON which is unfortunately not further documented. One key of the hash is `current` with sample values like this:
 
 ```
-sudo apt install libpq-dev python3-dev
+{
+  "current": {
+    "co2": 476,
+    "pm25": {
+      "conc": 24,
+      "aqius": 79,
+      "aqicn": 34
+    },
+    "pm10": {
+      "conc": 36,
+      "aqius": 33,
+      "aqicn": 36
+    },
+    "pm1": {
+      "conc": 19,
+      "aqius": 69,
+      "aqicn": 27
+    },
+    "pr": 102406,
+    "hm": 87,
+    "tp": 4.8,
+    "ts": "2024-12-03T04:10:11.000Z",
+    "mainus": "pm25",
+    "maincn": "pm10",
+    "aqius": 79,
+    "aqicn": 36
+  }
+}
 ```
 
-and 
+The metrics provided are:
 
-```
-pip install psycopg2-binary
-```
+* `co2`: Carbon dioxide concentration
+* `pm25, pm10, pm1`: Particulate matter concentrations and air quality indices (AQI) for various particle sizes
+* `conc`: Concentration of particulate matter
+* `aqius`: AQI based on the US standard
+* `aqicn`: AQI based on the China standard
+* `pr`: Atmospheric pressure
+* `hm`: Humidity
+* `tp`: Temperature
+* `ts`: Timestamp of the data
+* `mainus`: The main pollutant according to US standards
+* `maincn`: The main pollutant according to China standards
+* `aqius`: Overall AQI based on US standards
+* `aqicn`: Overall AQI based on China standards
 
 
-# Differences to the tutorial
+In the database, fields related to particulate matter are expanded so that one measurement corresponds to one table row. For example, `pm25.conc` is stored as `pm25_conc`.
 
-1. To create all tables (which is the post table), run this command in shell
+Project Setup
+Environment Variables
+Ensure to configure the following environment variables for database access and other configurations:
 
-```
-python create_db_tables.py
-```
+DB_HOST
+DB_PORT
+DB_NAME
+DB_USER
+DB_PASSWORD
+Database Schema
+The database uses the following schema:
 
-2. To populate the database with sample data, run
+sql
 
-```
-python add_sample_data.py
-````
+Copy code
+CREATE TABLE air_quality_records (
+  id SERIAL PRIMARY KEY,
+  co2 INTEGER,
+  pm25_conc INTEGER,
+  pm25_aqius INTEGER,
+  pm25_aqicn INTEGER,
+  pm10_conc INTEGER,
+  pm10_aqius INTEGER,
+  pm10_aqicn INTEGER,
+  pm1_conc INTEGER,
+  pm1_aqius INTEGER,
+  pm1_aqicn INTEGER,
+  pr INTEGER,
+  hm INTEGER,
+  tp FLOAT,
+  ts TIMESTAMP,
+  mainus VARCHAR(10),
+  maincn VARCHAR(10),
+  aqius INTEGER,
+  aqicn INTEGER
+);
+GraphQL Endpoints
+Mutations
+createRecord(input: AirQualityInput): AirQualityRecord
+Queries
+latestRecord: AirQualityRecord
+Running the Server
+To start the server, run:
 
-The sample data is read from file data/posts.csv.
+sh
+
+Copy code
+npm install
+npm start
+Ensure that the PostgreSQL database is running and accessible with the provided environment variables.
+
+Testing
+Tests are written using Jest and Supertest. To run the tests, execute:
+
+sh
+
+Copy code
+npm test
+
+
