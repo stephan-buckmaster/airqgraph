@@ -1,13 +1,12 @@
 import sys
+import requests
+import json
 
 if (len(sys.argv) < 3): 
     sys.exit("Need airvisual_device_url and graphql_url")
 
 airvisual_device_url=sys.argv[1]
 graphql_url=sys.argv[2]
-
-import requests
-import json
 
 # Load device data
 response = requests.get(airvisual_device_url)
