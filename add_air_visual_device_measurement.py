@@ -3,19 +3,19 @@ import requests
 import json
 
 if (len(sys.argv) < 3): 
-    sys.exit("Need airvisual_device_url and graphql_url")
+    sys.exit("Need air_visual_device_url and graphql_url")
 
-airvisual_device_url=sys.argv[1]
+air_visual_device_url=sys.argv[1]
 graphql_url=sys.argv[2]
 
 # Load device data
-response = requests.get(airvisual_device_url)
+response = requests.get(air_visual_device_url)
 data = json.loads(response.text)
 
 graphql_query = '''
-mutation CreateNewAirvisualDeviceMeasurement($input: AirvisualDeviceMeasurementInput!) {
-  createAirvisualDeviceMeasurement(input: $input) {
-    airvisual_device_measurement { id co2 hm aqius pr aqicn }
+mutation CreateNewAirVisualDeviceMeasurement($input: AirVisualDeviceMeasurementInput!) {
+  createAirVisualDeviceMeasurement(input: $input) {
+    air_visual_device_measurement { id co2 hm aqius pr aqicn  created_at}
     success
     errors 
   }

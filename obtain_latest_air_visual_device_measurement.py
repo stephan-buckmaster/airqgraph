@@ -9,10 +9,10 @@ graphql_url=sys.argv[1]
 
 graphql_query = '''
 query LastAirVisualDeviceMeasurement {
-  getLatestAirvisualDeviceMeasurement  {
+  getLatestAirVisualDeviceMeasurement  {
     success
     errors
-    airvisual_device_measurement {
+    air_visual_device_measurement {
       id
       co2
       pm25 { conc aqius aqicn }
@@ -35,4 +35,4 @@ query LastAirVisualDeviceMeasurement {
 r = requests.post(graphql_url, json={'query': graphql_query})
 
 data = json.loads(r.text)['data']
-print(data['getLatestAirvisualDeviceMeasurement'])
+print(data['getLatestAirVisualDeviceMeasurement'])

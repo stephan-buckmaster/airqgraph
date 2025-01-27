@@ -3,23 +3,23 @@ schema {
     mutation: Mutation
 }
 
-type AirvisualConcentration {
+type AirVisualConcentration {
     conc: Float
     aqius: Float
     aqicn: Float
 }
 
-input AirvisualConcentrationInput {
+input AirVisualConcentrationInput {
     conc: Float
     aqius: Float
     aqicn: Float
 }
-type AirvisualDeviceMeasurement {
+type AirVisualDeviceMeasurement {
     id: ID!
     co2: Float
-    pm25: AirvisualConcentration!
-    pm10:  AirvisualConcentration!
-    pm1:  AirvisualConcentration!
+    pm25: AirVisualConcentration!
+    pm10:  AirVisualConcentration!
+    pm1:  AirVisualConcentration!
     pr: Float
     hm: Float
     tp: Float
@@ -31,10 +31,10 @@ type AirvisualDeviceMeasurement {
     created_at: String!
 }
 
-input AirvisualDeviceMeasurementInput {
-    pm25: AirvisualConcentrationInput
-    pm10:  AirvisualConcentrationInput
-    pm1:  AirvisualConcentrationInput
+input AirVisualDeviceMeasurementInput {
+    pm25: AirVisualConcentrationInput
+    pm10:  AirVisualConcentrationInput
+    pm1:  AirVisualConcentrationInput
     co2: Float
     pr: Float
     hm: Float
@@ -46,24 +46,24 @@ input AirvisualDeviceMeasurementInput {
     ts: String
 }
 
-type AirvisualDeviceMeasurementResult {
+type AirVisualDeviceMeasurementResult {
     success: Boolean!
     errors: [String]
-    airvisual_device_measurement: AirvisualDeviceMeasurement
+    air_visual_device_measurement: AirVisualDeviceMeasurement
 }
 
-type AirvisualDeviceMeasurementsResult {
+type AirVisualDeviceMeasurementsResult {
     success: Boolean!
     errors: [String]
-    airvisual_device_measurements: [AirvisualDeviceMeasurement]
+    air_visual_device_measurements: [AirVisualDeviceMeasurement]
 }
 
 type Query {
-    listAirvisualDeviceMeasurements: AirvisualDeviceMeasurementsResult!
-    getLatestAirvisualDeviceMeasurement: AirvisualDeviceMeasurementResult!
-    getAirvisualDeviceMeasurement(id: ID!): AirvisualDeviceMeasurementResult!
+    listAirVisualDeviceMeasurements: AirVisualDeviceMeasurementsResult!
+    getLatestAirVisualDeviceMeasurement: AirVisualDeviceMeasurementResult!
+    getAirVisualDeviceMeasurement(id: ID!): AirVisualDeviceMeasurementResult!
 }
 
 type Mutation {
-    createAirvisualDeviceMeasurement(input: AirvisualDeviceMeasurementInput): AirvisualDeviceMeasurementResult!
+    createAirVisualDeviceMeasurement(input: AirVisualDeviceMeasurementInput): AirVisualDeviceMeasurementResult!
 }

@@ -87,25 +87,25 @@ The server provides three queries and one mutation:
 
 ```
 type Query {
-    listAirvisualDeviceMeasurements: AirvisualDeviceMeasurementsResult!
-    getLatestAirvisualDeviceMeasurement: AirvisualDeviceMeasurementResult!
-    getAirvisualDeviceMeasurement(id: ID!): AirvisualDeviceMeasurementResult!
+    listAirVisualDeviceMeasurements: AirVisualDeviceMeasurementsResult!
+    getLatestAirVisualDeviceMeasurement: AirVisualDeviceMeasurementResult!
+    getAirVisualDeviceMeasurement(id: ID!): AirVisualDeviceMeasurementResult!
 }
 
 type Mutation {
-    createAirvisualDeviceMeasurement(input: AirvisualDeviceMeasurementInput): AirvisualDeviceMeasurementResult!
+    createAirVisualDeviceMeasurement(input: AirVisualDeviceMeasurementInput): AirVisualDeviceMeasurementResult!
 }
 ```
 
-The fields of a AirvisualDeviceMeasurement are those of IQAir's JSON response, plus a separate timestamp, and a database id.
+The fields of a AirVisualDeviceMeasurement are those of IQAir's JSON response, plus a separate timestamp, and a database id.
 The structure of pm1, pm10, pm25 are the same in the GraphQL query, the nesting is kept. But not so in the database schema where this is flattened.
 
 ```
-=> \d airvisual_device_measurement;
-                                         Table "public.airvisual_device_measurement"
+=> \d air_visual_device_measurement;
+                                         Table "public.air_visual_device_measurement"
    Column   |            Type             | Collation | Nullable |                          Default
 ------------+-----------------------------+-----------+----------+-----------------------------------------------------------
- id         | integer                     |           | not null | nextval('airvisual_device_measurement_id_seq1'::regclass)
+ id         | integer                     |           | not null | nextval('air_visual_device_measurement_id_seq1'::regclass)
  co2        | double precision            |           |          |
  pm25_conc  | double precision            |           |          |
  pm25_aqius | double precision            |           |          |
@@ -126,7 +126,7 @@ The structure of pm1, pm10, pm25 are the same in the GraphQL query, the nesting 
  ts         | character varying           |           |          |
  created_at | timestamp without time zone |           | not null |
 Indexes:
-    "airvisual_device_measurement_pkey1" PRIMARY KEY, btree (id)
+    "air_visual_device_measurement_pkey1" PRIMARY KEY, btree (id)
 ```
 
 The application uses no other database table.
@@ -173,7 +173,7 @@ A script is provided to obtain the most recent data given the URL of the GraphQL
 
 ```
 $ python obtain_latest_air_visual_device_measurement.py http://localhost:5000/graphql 
-{'airvisual_device_measurement': {'aqicn': 39.0, 'aqius': 71.0, 'co2': 463.0, 'created_at': '2024-12-03T06:54:46.470086', 'hm': 88.0, 'id': '75', 'maincn': 'pm10', 'mainus': 'pm25', 'pm1': {'aqicn': 16.0, 'aqius': 55.0, 'conc': 11.0}, 'pm10': {'aqicn': 39.0, 'aqius': 36.0, 'conc': 39.0}, 'pm25': {'aqicn': 29.0, 'aqius': 71.0, 'conc': 20.0}, 'pr': 102444.0, 'tp': 2.9, 'ts': '2024-12-03T14:53:41.000Z'}, 'errors': None, 'success': True}
+{'air_visual_device_measurement': {'aqicn': 39.0, 'aqius': 71.0, 'co2': 463.0, 'created_at': '2024-12-03T06:54:46.470086', 'hm': 88.0, 'id': '75', 'maincn': 'pm10', 'mainus': 'pm25', 'pm1': {'aqicn': 16.0, 'aqius': 55.0, 'conc': 11.0}, 'pm10': {'aqicn': 39.0, 'aqius': 36.0, 'conc': 39.0}, 'pm25': {'aqicn': 29.0, 'aqius': 71.0, 'conc': 20.0}, 'pr': 102444.0, 'tp': 2.9, 'ts': '2024-12-03T14:53:41.000Z'}, 'errors': None, 'success': True}
 .py https://device.iqair.com/v2/1234567890abcdef12345678 http://localhost:5000/graphql
 ```
 

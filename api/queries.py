@@ -1,13 +1,13 @@
-from .models import AirvisualDeviceMeasurement
+from .models import AirVisualDeviceMeasurement
 from ariadne import convert_kwargs_to_snake_case
 from sqlalchemy import text
 
-def listAirvisualDeviceMeasurements_resolver(obj, info):
+def listAirVisualDeviceMeasurements_resolver(obj, info):
     try:
-        airvisual_device_measurements = [airvisual_device_measurement.to_dict() for airvisual_device_measurement in AirvisualDeviceMeasurement.query.all()]
+        air_visual_device_measurements = [air_visual_device_measurement.to_dict() for air_visual_device_measurement in AirVisualDeviceMeasurement.query.all()]
         payload = {
             "success": True,
-            "airvisual_device_measurements": airvisual_device_measurements
+            "air_visual_device_measurements": air_visual_device_measurements
         }
     except Exception as error:
         payload = {
@@ -17,13 +17,13 @@ def listAirvisualDeviceMeasurements_resolver(obj, info):
     return payload
 
 @convert_kwargs_to_snake_case
-def getLatestAirvisualDeviceMeasurement_resolver(obj, info):
+def getLatestAirVisualDeviceMeasurement_resolver(obj, info):
     try:
         print(str(info))
-        airvisual_device_measurement = AirvisualDeviceMeasurement.query.order_by(text('id desc')).limit(1).first()
+        air_visual_device_measurement = AirVisualDeviceMeasurement.query.order_by(text('id desc')).limit(1).first()
         payload = {
             "success": True,
-            "airvisual_device_measurement": airvisual_device_measurement.to_dict()
+            "air_visual_device_measurement": air_visual_device_measurement.to_dict()
         }
 
     except Exception as err :
@@ -34,12 +34,12 @@ def getLatestAirvisualDeviceMeasurement_resolver(obj, info):
 
     return payload
 @convert_kwargs_to_snake_case
-def getAirvisualDeviceMeasurement_resolver(obj, info, id):
+def getAirVisualDeviceMeasurement_resolver(obj, info, id):
     try:
-        airvisual_device_measurement = AirvisualDeviceMeasurement.query.get(id)
+        air_visual_device_measurement = AirVisualDeviceMeasurement.query.get(id)
         payload = {
             "success": True,
-            "airvisual_device_measurement": airvisual_device_measurement.to_dict()
+            "air_visual_device_measurement": air_visual_device_measurement.to_dict()
         }
 
     except AttributeError:  # todo not found

@@ -6,8 +6,8 @@ from ariadne import load_schema_from_path, make_executable_schema, \
     graphql_sync, snake_case_fallback_resolvers, ObjectType
 from flask import request, jsonify
 
-from api.queries import listAirvisualDeviceMeasurements_resolver, getAirvisualDeviceMeasurement_resolver, getLatestAirvisualDeviceMeasurement_resolver
-from api.mutations import create_airvisual_device_measurement_resolver
+from api.queries import listAirVisualDeviceMeasurements_resolver, getAirVisualDeviceMeasurement_resolver, getLatestAirVisualDeviceMeasurement_resolver
+from api.mutations import create_air_visual_device_measurement_resolver
 
 from ariadne.explorer import ExplorerPlayground
 
@@ -16,11 +16,11 @@ PLAYGROUND_HTML = ExplorerPlayground(title="Air Quality Monitoring Data API").ht
 query = ObjectType("Query")
 mutation = ObjectType("Mutation")
 
-query.set_field("listAirvisualDeviceMeasurements", listAirvisualDeviceMeasurements_resolver)
-query.set_field("getAirvisualDeviceMeasurement", getAirvisualDeviceMeasurement_resolver)
-query.set_field("getLatestAirvisualDeviceMeasurement", getLatestAirvisualDeviceMeasurement_resolver)
+query.set_field("listAirVisualDeviceMeasurements", listAirVisualDeviceMeasurements_resolver)
+query.set_field("getAirVisualDeviceMeasurement", getAirVisualDeviceMeasurement_resolver)
+query.set_field("getLatestAirVisualDeviceMeasurement", getLatestAirVisualDeviceMeasurement_resolver)
 
-mutation.set_field("createAirvisualDeviceMeasurement", create_airvisual_device_measurement_resolver)
+mutation.set_field("createAirVisualDeviceMeasurement", create_air_visual_device_measurement_resolver)
 
 type_defs = load_schema_from_path("schema.graphql")
 schema = make_executable_schema(

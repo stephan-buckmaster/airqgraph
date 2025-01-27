@@ -1,6 +1,6 @@
 from app import db
 
-class AirvisualDeviceMeasurement(db.Model):
+class AirVisualDeviceMeasurement(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     co2 = db.Column(db.Float)
     pm25_conc = db.Column(db.Float)
