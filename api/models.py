@@ -17,9 +17,9 @@ class AirVisualDeviceMeasurement(db.Model):
     tp = db.Column(db.Float)
     aqius = db.Column(db.Float)
     aqicn = db.Column(db.Float)
-    mainus = db.Column(db.String)
-    maincn = db.Column(db.String)
-    ts = db.Column(db.String)
+    mainus = db.Column(db.String(10))
+    maincn = db.Column(db.String(10))
+    ts = db.Column(db.String(256))
     created_at = db.Column(db.DateTime, nullable=False)
 
     def to_dict(self):

@@ -3,7 +3,7 @@
 
 Motivation: I have an [IQAir](https://www.iqair.com) air quality monitor which measures air pollution exposure just outside our home. Their mobile app allows viewing real-time and historic air quality. I can share the sensor data with millions of users through the same app. 
 
-However, these users (including my friends) need to create an account and log in to use the app -- an unnecessary hurdle. So I have developed this application to make the data available without an account.
+However, these users (including my friends) need to create an account and log in to use the app -- an unnecessary hurdle. On top of which the public data has gaps. It looks to me like my device provides more data than the straightforward use of the free app provides. So I have developed this application to make the data available without an account. This is the data part, to collect this data. Another app will read this data, and my friends can just go to a web page, and see the newest air quality measurements from my device.
 
 ## Overview
 The system involves two primary APIs:
@@ -100,6 +100,10 @@ type Mutation {
 The fields of a AirVisualDeviceMeasurement are those of IQAir's JSON response, plus a separate timestamp, and a database id.
 The structure of pm1, pm10, pm25 are the same in the GraphQL query, the nesting is kept. But not so in the database schema where this is flattened.
 
+The application supports MySQL and PostgreSQL.
+
+Here is what we see with PostgreSQL:
+
 ```
 => \d air_visual_device_measurement;
                                          Table "public.air_visual_device_measurement"
@@ -139,13 +143,31 @@ Using Python version 3.13 or higher:
 pip install -r requirements.txt
 ```
 
+Depending on whether you like MySQL or PostgreSQL you would then install the database drivers:
+
+```
+pip install -r requirements-mysql.txt
+```
+
+or,
+
+```
+pip install -r requirements-postgresql.txt
+```
+
 The flask application will use this common setting from file `.env`:
 
 ```
 DATABASE_URI='postgresql://db_user:db_password@db_host:1234/db_database'
 ```
 
-Then this command will create the database table:
+or
+
+```
+DATABASE_URI='mysql+pymysql://db_user:db_password@db_host:1234/db_database'
+```
+
+Then this command will create the database table independently from your database choice:
 
 ```
 $ python create_db_tables.py
