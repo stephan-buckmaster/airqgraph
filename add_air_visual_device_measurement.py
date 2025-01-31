@@ -1,6 +1,7 @@
 import sys
 import requests
 import json
+import os
 
 if (len(sys.argv) < 3): 
     sys.exit("Need air_visual_device_url and graphql_url")
@@ -22,8 +23,16 @@ mutation CreateNewAirVisualDeviceMeasurement($input: AirVisualDeviceMeasurementI
 }
 '''
 
-r = requests.post(graphql_url, json={'query': graphql_query, 'variables': {'input': data['current']}})
 
-print(json.loads(r.text))
+headers = {}
+if os.getenv("BEARER_AUTH_TOKEN_FILE"):
+  token =  open(os.getenv("BEARER_AUTH_TOKEN_FILE")).readline().strip()
+  headers['Authorization'] = f"Bearer {token}"
 
-# TODO How to handle errors, success in response is not True?
+result = requests.post(graphql_url, json={'query': graphql_query, 'variables': {'input': data['current']}}, headers=headers)
+
+if result.status_code == requests.codes.ok:
+    print(json.loads(result.text))
+else:
+    print("Response status",  result.status_code)
+    print(result.text)
