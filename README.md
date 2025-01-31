@@ -173,7 +173,20 @@ Then this command will create the database table independently from your databas
 $ python create_db_tables.py
 ```
 
-And this command will run the server in development mode (as usual):
+Bearer Authentication is supported for GraphQL Post requests:
+
+Create a file, let's say `token-hashes.txt`, and append a line `BEARER_AUTH_FILE=token-hashes.txt` to the .env
+file. In file `token-hashes.txt`, place hex-digests of the SHA256 hashes of the actual bearer token.
+These can be generated with
+
+```
+  token_hash = hashlib.sha256(token.encode('utf-8')).hexdigest()
+```
+
+Then POST requests must have an Authorization header with the bearer token. See below for client side.
+
+
+This command will run the server in development mode (as usual):
 
 ```
 flask run
@@ -188,6 +201,11 @@ python add_air_visual_device_measurement.py https://device.iqair.com/v2/12345678
 ```
 
 The code also illustrates a GraphQL mutation to use for creating records.
+
+Client Authentication
+
+If your server is using Bearer Authentication, your can have the add_air_visual_device_measurement.py script submit the bearer token by
+placing the token in a file, let's say, bearer-token.txt and setting environment variable BEARER_AUTH_TOKEN_FILE=bearer-token.txt
 
 ## Retrieving data from the GraphQL server
 
